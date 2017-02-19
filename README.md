@@ -4,4 +4,3 @@
  integrated with naga-framework for theming purpose
  fundation for cms made with naga.
  
-
