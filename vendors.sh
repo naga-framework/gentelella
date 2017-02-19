@@ -2,8 +2,8 @@
 
 #git clone https://github.com/puikinsh/gentelella -b 1.4.0 
 #copy all vendor reference to priv
-JS=`grep script $1/production/* | grep vendors | awk -F'"' '{print $2}' | grep "^\.\."`
-CSS=`grep style $1/production/* | grep vendors | awk -F'"' '{print $2}' | grep "^\.\."`
+JS=`grep script $1/production/*| sort -u | grep vendors | awk -F'"' '{print $2}' | grep "^\.\."`
+CSS=`grep style $1/production/*| sort -u | grep vendors | awk -F'"' '{print $2}' | grep "^\.\."`
 DIR=priv
 
 for i in $JS
@@ -12,7 +12,8 @@ for i in $JS
    path=$1$p
    n=$DIR$p
    mkdir -p $n
-   cp $path $n 
+   rmdir $n
+   cp $path $n
  done
 
 for i in $CSS
@@ -21,5 +22,6 @@ for i in $CSS
    path=$1$p
    n=$DIR$p
    mkdir -p $n
+   rmdir $n
    cp $path $n 
- done
+ done 
