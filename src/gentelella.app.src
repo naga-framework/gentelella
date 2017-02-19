@@ -1,0 +1,7 @@
+{application, gentelella,
+  [{description, "admin bootstrap 3 template https://github.com/puikinsh/gentelella"},
+   {vsn, "1.4.0"},
+   {registered, []},
+   {applications, [kernel, stdlib]},
+   {mod, { gentelella, []}},
+   {env, []} ]}.
