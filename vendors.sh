@@ -25,3 +25,8 @@ for i in $CSS
    rmdir $n
    cp $path $n 
  done 
+
+cp -r $1/vendors/bootstrap/dist/fonts/ priv/vendors/bootstrap/dist/fonts/
+cp -r $1/vendors/font-awesome/fonts/ priv/vendors/font-awesome/fonts
+cp -r $1/vendors/iCheck/skins/ priv/vendors/iCheck/skins/
+cp -r $1/production/images/ priv/images
