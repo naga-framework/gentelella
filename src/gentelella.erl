@@ -2,6 +2,7 @@
 -behaviour(supervisor).
 -behaviour(application).
 -export([init/1, start/2, stop/1]).
+-export([vendors/2,vendors/3]).
 -include_lib("nitro/include/nitro.hrl").
 
 start(_,_) -> supervisor:start_link({local,gentelella }, gentelella,[]).
@@ -16,8 +17,8 @@ vendors(T,L,B) when is_list(L),is_list(B)->
    lists:flatten(
    lists:foldr(fun(X,Acc) ->
                 [case T of 
-                  js -> [#script{src=lists:concat(B,S)}||S<-vendor(X,T)];
-                  css-> [#meta_link{href=lists:concat(B,S),rel="stylesheet"}||S<-vendor(X,T)]
+                  js -> [#script{src=B++S}||S<-vendor(X,T),S/=[]];
+                  css-> [#meta_link{href=B++S,rel="stylesheet"}||S<-vendor(X,T),S/=[]]
                 end|Acc]
                end,[],L))).
 
