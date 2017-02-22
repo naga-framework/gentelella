@@ -2,7 +2,7 @@
 -behaviour(supervisor).
 -behaviour(application).
 -export([init/1, start/2, stop/1]).
--export([vendors/2,vendors/3]).
+-export([vendors/2,vendors/3,pnotify/3]).
 -include_lib("nitro/include/nitro.hrl").
 
 start(_,_) -> supervisor:start_link({local,gentelella }, gentelella,[]).
@@ -35,8 +35,15 @@ vendor(fontawesome,js) -> [];
 vendor(nprogress,css)  -> ["/vendors/nprogress/nprogress.css"];
 vendor(nprogress,js)   -> ["/vendors/nprogress/nprogress.js"];
 vendor(animate,css)    -> ["/vendors/animate.css/animate.min.css"];
-vendor(animate,js)     -> [].
-
+vendor(animate,js)     -> [];
+vendor(jquery,css)     -> [];
+vendor(jquery,js)      -> ["/vendors/jquery/dist/jquery.min.js"];
+vendor(fastclick,css)  -> [];
+vendor(fastclick,js)   -> ["/vendors/fastclick/lib/fastclick.js"];
+vendor(progressbar,css)-> [];
+vendor(progressbar,js) -> ["/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"];
+vendor(iCheck,css)     -> [];
+vendor(iCheck,js)      -> ["/vendors/iCheck/icheck.min.js"].
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
