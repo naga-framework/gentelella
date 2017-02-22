@@ -22,28 +22,65 @@ vendors(T,L,B) when is_list(L),is_list(B)->
                 end|Acc]
                end,[],L))).
 
-vendor(pnotify,css)    -> ["/vendors/pnotify/dist/pnotify.css",
-                           "/vendors/pnotify/dist/pnotify.buttons.css",
-                           "/vendors/pnotify/dist/pnotify.nonblock.css"];
-vendor(pnotify,js)     -> ["/vendors/pnotify/dist/pnotify.js",
-                           "/vendors/pnotify/dist/pnotify.buttons.js",
-                           "/vendors/pnotify/dist/pnotify.nonblock.js"];
-vendor(bootstrap3,css) -> ["/vendors/bootstrap/dist/css/bootstrap.min.css"];
-vendor(bootstrap3,js)  -> ["/vendors/bootstrap/dist/js/bootstrap.min.js"];
-vendor(fontawesome,css)-> ["/vendors/font-awesome/css/font-awesome.min.css"];
-vendor(fontawesome,js) -> [];
-vendor(nprogress,css)  -> ["/vendors/nprogress/nprogress.css"];
-vendor(nprogress,js)   -> ["/vendors/nprogress/nprogress.js"];
-vendor(animate,css)    -> ["/vendors/animate.css/animate.min.css"];
-vendor(animate,js)     -> [];
-vendor(jquery,css)     -> [];
-vendor(jquery,js)      -> ["/vendors/jquery/dist/jquery.min.js"];
-vendor(fastclick,css)  -> [];
-vendor(fastclick,js)   -> ["/vendors/fastclick/lib/fastclick.js"];
-vendor(progressbar,css)-> [];
-vendor(progressbar,js) -> ["/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"];
-vendor(iCheck,css)     -> [];
-vendor(iCheck,js)      -> ["/vendors/iCheck/icheck.min.js"].
+vendor(pnotify,css)        -> ["/vendors/pnotify/dist/pnotify.css",
+                               "/vendors/pnotify/dist/pnotify.buttons.css",
+                               "/vendors/pnotify/dist/pnotify.nonblock.css"];
+vendor(pnotify,js)         -> ["/vendors/pnotify/dist/pnotify.js",
+                               "/vendors/pnotify/dist/pnotify.buttons.js",
+                               "/vendors/pnotify/dist/pnotify.nonblock.js"];
+vendor(bootstrap3,css)     -> ["/vendors/bootstrap/dist/css/bootstrap.min.css"];
+vendor(bootstrap3,js)      -> ["/vendors/bootstrap/dist/js/bootstrap.min.js"];
+vendor(fontawesome,css)    -> ["/vendors/font-awesome/css/font-awesome.min.css"];
+vendor(fontawesome,js)     -> [];
+vendor(nprogress,css)      -> ["/vendors/nprogress/nprogress.css"];
+vendor(nprogress,js)       -> ["/vendors/nprogress/nprogress.js"];
+vendor(animate,css)        -> ["/vendors/animate.css/animate.min.css"];
+vendor(animate,js)         -> [];
+vendor(jquery,css)         -> [];
+vendor(jquery,js)          -> ["/vendors/jquery/dist/jquery.min.js"];
+vendor(fastclick,css)      -> [];
+vendor(fastclick,js)       -> ["/vendors/fastclick/lib/fastclick.js"];
+vendor(progressbar,css)    -> [];
+vendor(progressbar,js)     -> ["/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"];
+vendor(iCheck,css)         -> [];
+vendor(iCheck,js)          -> ["/vendors/iCheck/icheck.min.js"];
+vendor(validator,css)      -> [];
+vendor(validator,js)       -> ["/vendors/validator/validator.js"];
+vendor(parsleyjs,css)      -> [];
+vendor(parsleyjs,js)       -> ["/vendors/parsleyjs/dist/parsley.min.js"];
+vendor(daterangepicker,css)-> ["/vendors/bootstrap-daterangepicker/daterangepicker.css"];
+vendor(daterangepicker,js) -> ["/vendors/bootstrap-daterangepicker/daterangepicker.js"];
+vendor(jqvmap,css)         -> ["/vendors/jqvmap/dist/jqvmap.min.css"];
+vendor(jqvmap,js)          -> ["/vendors/jqvmap/dist/jquery.vmap.js",
+                               "/vendors/jqvmap/dist/maps/jquery.vmap.world.js",
+                               "/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"
+                              ];
+vendor(icheck,css)         -> [];
+vendor(icheck,js)          -> ["/vendors/iCheck/icheck.min.js"];
+vendor(skycons,css)        -> [];
+vendor(skycons,js)         -> ["/vendors/skycons/skycons.js"];
+vendor(flot,css)           -> [];
+vendor(flot,js)            -> ["/vendors/Flot/jquery.flot.js",
+                               "/vendors/Flot/jquery.flot.pie.js",
+                               "/vendors/Flot/jquery.flot.time.js",
+                               "/vendors/Flot/jquery.flot.stack.js",
+                               "/vendors/Flot/jquery.flot.resize.js"];
+vendor(flot_orderbars,css) -> [];
+vendor(flot_orderbars,js)  -> ["/vendors/flot.orderbars/js/jquery.flot.orderBars.js"];
+vendor(flot_spline,css)    -> [];
+vendor(flot_spline,js)     -> ["/vendors/flot-spline/js/jquery.flot.spline.min.js"];
+vendor(flot_curvedlines,css)-> [];
+vendor(flot_curvedlines,js)-> ["/vendors/flot.curvedlines/curvedLines.js"];
+vendor(datejs,css)         -> [];
+vendor(datejs,js)          -> ["/vendors/DateJS/build/date.js"];
+vendor(moment,css)         -> [];
+vendor(moment,js)          -> ["/vendors/moment/min/moment.min.js"];
+vendor(gauge,css)          -> [];
+vendor(gauge,js)           -> ["/vendors/gauge.js/dist/gauge.min.js"];
+vendor(chartjs,css)        -> [];
+vendor(chartjs,js)         -> ["/vendors/Chart.js/dist/Chart.min.js"];
+vendor(gentelella,css)     -> ["/build/css/custom.min.css"];
+vendor(gentelella,js)      -> ["/build/js/custom.js"].
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
