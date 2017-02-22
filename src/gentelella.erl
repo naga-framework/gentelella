@@ -15,20 +15,27 @@ vendors(T,L,B) when is_list(L),is_list(B)->
    wf:render(
    lists:flatten(
    lists:foldr(fun(X,Acc) ->
-                [[#script{src=lists:concat(B,S)}||S<-vendor(T,X)]|Acc]
+                [case T of 
+                  js -> [#script{src=lists:concat(B,S)}||S<-vendor(X,T)];
+                  css-> [#meta_link{href=lists:concat(B,S),rel="stylesheet"}||S<-vendor(X,T)]
+                end|Acc]
                end,[],L))).
 
-vendor(pnotify,css) -> 
-  ["/vendors/pnotify/dist/pnotify.css",
-   "/static/gentelella/vendors/pnotify/dist/pnotify.buttons.css",
-   "/static/gentelella/vendors/pnotify/dist/pnotify.nonblock.css"
-   ];
+vendor(pnotify,css)    -> ["/vendors/pnotify/dist/pnotify.css",
+                           "/vendors/pnotify/dist/pnotify.buttons.css",
+                           "/vendors/pnotify/dist/pnotify.nonblock.css"];
+vendor(pnotify,js)     -> ["/vendors/pnotify/dist/pnotify.js",
+                           "/vendors/pnotify/dist/pnotify.buttons.js",
+                           "/vendors/pnotify/dist/pnotify.nonblock.js"];
+vendor(bootstrap3,css) -> ["/vendors/bootstrap/dist/css/bootstrap.min.css"];
+vendor(bootstrap3,js)  -> ["/vendors/bootstrap/dist/js/bootstrap.min.js"];
+vendor(fontawesome,css)-> ["/vendors/font-awesome/css/font-awesome.min.css"];
+vendor(fontawesome,js) -> [];
+vendor(nprogress,css)  -> ["/vendors/nprogress/nprogress.css"];
+vendor(nprogress,js)   -> ["/vendors/nprogress/nprogress.js"];
+vendor(animate,css)    -> ["/vendors/animate.css/animate.min.css"];
+vendor(animate,js)     -> [].
 
-vendor(pnotify,js) -> 
-  ["/static/gentelella/vendors/pnotify/dist/pnotify.js",
-   "/static/gentelella/vendors/pnotify/dist/pnotify.buttons.js",
-   "/static/gentelella/vendors/pnotify/dist/pnotify.nonblock.js"
-   ].
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
