@@ -47,7 +47,7 @@ vendor(iCheck,js)      -> ["/vendors/iCheck/icheck.min.js"].
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
-                 "type:'~s'"
+                 "type:'~s',"
                 "title:'~s',"
                  "text:'~s',"
                  "styling:'bootstrap3'"
