@@ -46,8 +46,8 @@ vendor(iCheck,css)         -> [];
 vendor(iCheck,js)          -> ["/vendors/iCheck/icheck.min.js"];
 vendor(validator,css)      -> [];
 vendor(validator,js)       -> ["/vendors/validator/validator.js"];
-vendor(parsleyjs,css)      -> [];
-vendor(parsleyjs,js)       -> ["/vendors/parsleyjs/dist/parsley.min.js"];
+vendor(parsley,css)        -> [];
+vendor(parsley,js)         -> ["/vendors/parsleyjs/dist/parsley.min.js"];
 vendor(daterangepicker,css)-> ["/vendors/bootstrap-daterangepicker/daterangepicker.css"];
 vendor(daterangepicker,js) -> ["/vendors/bootstrap-daterangepicker/daterangepicker.js"];
 vendor(jqvmap,css)         -> ["/vendors/jqvmap/dist/jqvmap.min.css"];
@@ -79,8 +79,31 @@ vendor(gauge,css)          -> [];
 vendor(gauge,js)           -> ["/vendors/gauge.js/dist/gauge.min.js"];
 vendor(chartjs,css)        -> [];
 vendor(chartjs,js)         -> ["/vendors/Chart.js/dist/Chart.min.js"];
+vendor(morris,css)         -> [];
+vendor(morris,js)          -> ["/vendors/morris.js/morris.min.js"];
+vendor(raphael,css)        -> [];
+vendor(raphael,js)         -> ["/vendors/raphael/raphael.min.js"];
+vendor(starrr,css)         -> ["/vendors/starrr/dist/starrr.css"];
+vendor(starrr,js)          -> ["/vendors/starrr/dist/starrr.js"];
+vendor(switchery,css)      -> ["/vendors/switchery/dist/switchery.min.css"];
+vendor(switchery,js)       -> ["/vendors/switchery/dist/switchery.min.js"];
+vendor(select2,css)        -> ["/vendors/select2/dist/css/select2.min.css"];
+vendor(select2,js)         -> ["/vendors/starrr/dist/starrr.js"];
+vendor(prettify,css)       -> ["/vendors/google-code-prettify/bin/prettify.min.css"];
+vendor(prettify,js)        -> ["/vendors/google-code-prettify/src/prettify.js"];
+vendor(wysiwyg,css)        -> [];
+vendor(wysiwyg,js)         -> ["/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"];
+vendor(hotkeys,css)        -> [];
+vendor(hotkeys,js)         -> ["/vendors/jquery.hotkeys/jquery.hotkeys.js"];
+vendor(tagsinput,css)      -> [];
+vendor(tagsinput,js)       -> ["/vendors/jquery.tagsinput/src/jquery.tagsinput.js"];
+vendor(autocomplete,css)   -> [];
+vendor(autocomplete,js)    -> ["/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"];
+vendor(autosize,css)       -> [];
+vendor(autosize,js)        -> ["/vendors/autosize/dist/autosize.min.js"];
 vendor(gentelella,css)     -> ["/build/css/custom.min.css"];
 vendor(gentelella,js)      -> ["/build/js/custom.js"].
+
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
