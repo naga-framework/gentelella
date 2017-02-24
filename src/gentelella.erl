@@ -101,9 +101,32 @@ vendor(autocomplete,css)   -> [];
 vendor(autocomplete,js)    -> ["/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"];
 vendor(autosize,css)       -> [];
 vendor(autosize,js)        -> ["/vendors/autosize/dist/autosize.min.js"];
+
+vendor(datatables,css)     -> ["/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+                               "/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css",
+                               "/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+                               "/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+                               "/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+                              ];
+vendor(datatables,js)      -> ["/vendors/datatables.net/js/jquery.dataTables.min.js",
+                               "/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
+                               "/vendors/datatables.net-buttons/js/dataTables.buttons.min.js",
+                               "/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js",
+                               "/vendors/datatables.net-buttons/js/buttons.flash.min.js",
+                               "/vendors/datatables.net-buttons/js/buttons.html5.min.js",
+                               "/vendors/datatables.net-buttons/js/buttons.print.min.js",
+                               "/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+                               "/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js",
+                               "/vendors/datatables.net-responsive/js/dataTables.responsive.min.js",
+                               "/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js",
+                               "/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"];
+vendor(jszip,css)          -> [];
+vendor(jszip,js)           -> ["/vendors/jszip/dist/jszip.min.js"];
+vendor(pdfmake,css)        -> [];
+vendor(pdfmake,js)         -> ["/vendors/pdfmake/build/pdfmake.min.js",
+                               "/vendors/pdfmake/build/vfs_fonts.js"];
 vendor(gentelella,css)     -> ["/build/css/custom.min.css"];
 vendor(gentelella,js)      -> ["/build/js/custom.js"].
-
 
 pnotify(Type,Title,Msg) ->
   wf:wire(wf:f("new PNotify({"
