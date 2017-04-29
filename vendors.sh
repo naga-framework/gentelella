@@ -26,7 +26,7 @@ for i in $CSS
    cp $path $n 
  done 
 
-cp -r $1/vendors/bootstrap/dist/fonts/ priv/vendors/bootstrap/dist/fonts/
-cp -r $1/vendors/font-awesome/fonts/ priv/vendors/font-awesome/fonts
-cp -r $1/vendors/iCheck/skins/ priv/vendors/iCheck/skins/
-cp -r $1/production/images/ priv/images
+cp -r $1/vendors/bootstrap/dist/fonts/ priv/static/vendors/bootstrap/dist/fonts/
+cp -r $1/vendors/font-awesome/fonts/ priv/static/vendors/font-awesome/fonts
+cp -r $1/vendors/iCheck/skins/ priv/static/vendors/iCheck/skins/
+cp -r $1/production/images/ priv/static/images
