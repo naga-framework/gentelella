@@ -1,0 +1,6 @@
+[
+%% STATIC FILES ROUTING
+%% ---------------------
+ { "/static/gentelella/[...]",naga_static,
+                       {dir,"deps/gentelella/priv/static",[{mimetypes,cow_mimetypes,all}]}}
+].
