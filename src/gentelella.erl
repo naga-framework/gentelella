@@ -2,8 +2,16 @@
 -behaviour(supervisor).
 -behaviour(application).
 -export([init/1, start/2, stop/1]).
--export([vendors/2,vendors/3,pnotify/3]).
+-export([vendors/2,vendors/3,pnotify/3,dummy/0]).
 -include_lib("nitro/include/nitro.hrl").
+
+-define(CSS,[bootstrap3,fontawesome,nprogress,icheck,progressbar,
+             jqvmap,moment,daterangepicker,pnotify,gentelella]).
+-define(JS,[jquery,bootstrap3,fastclick,nprogress,chartjs,gauge,
+            progressbar,icheck,skycons,flot,
+            flot_orderbars,flot_spline,flot_curvedlines,
+            datejs,jqvmap,moment,
+            daterangepicker,pnotify,gentelella]).
 
 start(_,_) -> supervisor:start_link({local,gentelella }, gentelella,[]).
 stop(_)    -> ok.
@@ -21,6 +29,13 @@ vendors(T,L,B) when is_list(L),is_list(B)->
                   css-> [#meta_link{href=B++S,rel="stylesheet"}||S<-vendor(X,T),S/=[]]
                 end|Acc]
                end,[],L))).
+
+dummy() ->
+   [
+    {page,[{css,vendors(css,?CSS)},
+           {js,vendors(js,?JS)}
+          ]}
+   ].
 
 vendor(pnotify,css)        -> ["/vendors/pnotify/dist/pnotify.css",
                                "/vendors/pnotify/dist/pnotify.buttons.css",
