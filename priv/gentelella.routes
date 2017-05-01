@@ -3,4 +3,9 @@
 %% ---------------------
  { "/static/gentelella/[...]",naga_static,
                        {dir,"deps/gentelella/priv/static",[{mimetypes,cow_mimetypes,all}]}}
+
+ %% naga convenient handler.
+ ,{"/gentelella/$v/[...]", naga_indexof, { gentelella,view,"/$v"}}
+ ,{"/gentelella/$s/[...]", naga_indexof, { gentelella,static,"/$s"}}
+
 ].

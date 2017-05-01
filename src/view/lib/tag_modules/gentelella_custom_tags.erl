@@ -117,7 +117,8 @@ wsKeytable(Vars,Opts) ->
  Rows = proplists:get_value(rows,Vars),
  case Rows of
   [] -> [];
-  _  -> Type = element(1,hd(Rows)),
+  undefined -> [];
+  Rows -> Type = element(1,hd(Rows)),
         Headers = Type:public(),
         TabId = wf:temp_id(),
 
@@ -142,14 +143,16 @@ wsKeytable(Vars,Opts) ->
 %------------------------------------------------------------------------------
 % Contact Info Form
 %------------------------------------------------------------------------------
-wsContactInfo(Vars,Opts) ->
-  #{user:=User} = Identity = proplists:get_value(identity,Vars),
-  wf:render(form_contact_info(User)).
+wsContactInfo(Vars,Opts) -> wsContactInfo(Vars,Opts,proplists:get_value(identity,Vars)).
+wsContactInfo(_,_,#{user:=#{username :=Username,
+                                  email    :=Email,
+                                  firstname:=Firstname,
+                                  lastname :=Lastname}}) ->
+  wf:render(form_contact_info(Username,Email,Firstname,Lastname));
+wsContactInfo(_,_,_) ->
+  wf:render(form_contact_info("johndoe","johndoe@lost.com","John","Doe")).
 
-form_contact_info(#{username :=Username,
-                    email    :=Email,
-                    firstname:=Firstname,
-                    lastname :=Lastname}) ->
+form_contact_info(Username,Email,Firstname,Lastname) ->
   #form{class=["form-horizontal form-label-left"], body=[
     #panel{class=["form-group"],body=[
       #label{class=["control-label col-md-3 col-sm-3 col-xs-12"],body=["Username"]},
@@ -196,9 +199,13 @@ form_contact_info(#{username :=Username,
 %------------------------------------------------------------------------------
 %%TODO: client validation before sending to backend
 wsChangePassword(Vars,Opts) ->
-  #{user :=User} = proplists:get_value(identity,Vars),
-  wf:render(form_password(User)).
-form_password(#{email:=Email}) ->
+  wsChangePassword(Vars,Opts,proplists:get_value(identity,Vars)).
+wsChangePassword(Vars,Opts,#{user :=#{email:=Email}}) ->  
+  wf:render(form_password(Email));
+wsChangePassword(Vars,Opts,_) ->  
+  wf:render(form_password("johndoe@lost.com")).
+
+form_password(Email) ->
   #form{class=["form-horizontal form-label-left"], body=[
     #panel{class=["form-group"],body=[
       #label{class=["control-label col-md-3 col-sm-3 col-xs-12"],body=["Password"]},
@@ -241,21 +248,25 @@ is_admin(#{is_admin:=true}) ->
   #li{body=[
             #button{type=button,
                     class=["btn btn-round btn-primary btn-xs"], 
-                    body=["Admin"]}]}.
+                    body=["Admin"]}]};
+is_admin(_) -> [].    
 
 is_author(#{is_author:=false}) -> [];
 is_author(#{is_author:=true})  -> 
   #li{body=[
             #button{type=button,
                     class=["btn btn-round btn-primary btn-xs"], 
-                    body=["Author"]}]}.
+                    body=["Author"]}]};
+is_author(_) -> [].
+
 
 is_modo(#{is_moderator:=false}) -> [];
 is_modo(#{is_moderator:=true}) -> 
   #li{body=[
             #button{type=button,
                     class=["btn btn-round btn-primary btn-xs"], 
-                    body=["Moderator"]}]}.
+                    body=["Moderator"]}]};
+is_modo(_) -> [].
 
 %------------------------------------------------------------------------------
 % AVATAR
@@ -309,9 +320,11 @@ my_avatar(Vars,Opts,Avatar) ->
 %------------------------------------------------------------------------------
 % TOPNAV
 %------------------------------------------------------------------------------
-my_top_nav(Vars, Opts) ->
- #{user := User} = Identity = proplists:get_value(identity,Vars),
- #{avatar := Avatar, username:=Username} = User,
+my_top_nav(Vars, Opts) -> my_top_nav(Vars, Opts,proplists:get_value(identity,Vars)).
+my_top_nav(V,O,#{user := #{avatar := Avatar, username:=Username}}) ->
+  my_top_nav(V,O,Avatar,Username);
+my_top_nav(V,O,_) -> my_top_nav(V,O,undefined,"john doe").
+my_top_nav(V,O,Avatar,Username) ->  
  wf:render(
   #panel{class=[top_nav], body=[
     #panel{class=[nav_menu], body=[
@@ -322,6 +335,7 @@ my_top_nav(Vars, Opts) ->
             avatar(Username,Avatar),
             #ul{class=["dropdown-menu dropdown-usermenu pull-right"], body=[
               profile(),
+              settings(),
               logout()
             ]},
             notifications()
@@ -364,12 +378,18 @@ help()->
   ]}.
 
 settings() ->
+  Complition = badge([]),
   #li{body=[
-    #link{href="/admin/settings", body=[
-      #span{class=["badge bg-red pull-right"],body=["50%"]},
+    #link{href="/admin/settings",body=[
+      Complition,
       #span{body=["Settings"]}
     ]}
   ]}.
+
+badge(C) -> #span{class=["badge bg-red pull-right"],body=[wf:to_list(C),"%"]}.
+
+
+
 
 notifications() ->
   #li{class=[dropdown],data_fields=[{role,presentation}],body=[
@@ -423,7 +443,7 @@ my_sidebar_menu(Vars,_Opts) ->
     %,section("PLUGINS")
   ]}).  
 
-section_general(#{is_admin := true})->
+section_general(Identity)->
   #panel{class=[menu_section],body=[
     #h3{body=["GENERAL"]},
     #ul{class=["nav side-menu"], body=[
