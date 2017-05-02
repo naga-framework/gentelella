@@ -1,33 +1,22 @@
 -module(gentelella_custom_tags).
--compile(export_all).
+-export([
+         wsArticleEditor/2,
+         wsContactInfo/2,
+         wsKeytable/2,
+         wsChangePassword/2,
+         my_access/2,
+         my_avatar/2,
+         my_top_nav/2,
+         my_sidebar_menu/2
+        ]).
 
 -include_lib("n2o/include/wf.hrl").
 -include_lib("naga/include/naga.hrl").
 -include_lib("nitro/include/nitro.hrl").
-%-include_lib("cms_adm/include/cms.hrl").
-
-% put custom tags in here, e.g.
-%
-reverse(Variables, Options) ->
-    %io:format("Variables: ~p, Options: ~p~n", [Variables, Options] ),
-    lists:reverse(binary_to_list(proplists:get_value(string, Variables))).
-%
-% {% reverse string="hello" %} => "olleh"
-%
-% Variables are the passed-in vars in your template
 
 %------------------------------------------------------------------------------
 % wsArticleEditor
 %------------------------------------------------------------------------------
-
-% <div class="form-group">
-%   <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-%   </label>
-%   <div class="col-md-9 col-sm-9 col-xs-12">
-%     <textarea class="form-control" rows="3" placeholder="rows=&quot;3&quot;"></textarea>
-%   </div>
-% </div>
-
 wsArticleEditor(Vars,Opts) ->
   Identity = proplists:get_value(identity,Vars),
   Id =wf:temp_id(),
@@ -42,73 +31,6 @@ By default, it saves every 10 seconds, but this can be changed. When this textar
       ]}
     ]}
   ).
-
-% field(text) ->
-%    #panel{class=["form-group"], body=[
-%     #label{class=["control-label col-md-3 col-sm-3 col-xs-12"], body=[
-%       "Default Input"
-%     ]},
-%     #panel{class=["col-md-9 col-sm-9 col-xs-12"], body=[
-%       #input{type=text, class=["form-control"], placeholder="Default Input"}
-%     ]}
-%   ]};
-% field(password) ->
-%    #panel{class=["form-group"], body=[
-%     #label{class=["control-label col-md-3 col-sm-3 col-xs-12"], body=[
-%       "Default Input"
-%     ]},
-%     #panel{class=["col-md-9 col-sm-9 col-xs-12"], body=[
-%       #input{type=password, class=["form-control"], placeholder="Default Input"}
-%     ]}
-%   ]};
-% field(country) ->
-%    #panel{class=["form-group"], body=[
-%     #label{class=["control-label col-md-3 col-sm-3 col-xs-12"], body=[
-%       "Default Input"
-%     ]},
-%     #panel{class=["col-md-9 col-sm-9 col-xs-12"], body=[
-%       #input{type=text, 
-%              id= <<"autocomplete-custom-append">>,
-%              class=["form-control col-md-10"], placeholder="Default Input"}
-%     ]}
-%   ]};
-
-   % <div class="control-group">
-   %    <label class="control-label col-md-3 col-sm-3 col-xs-12">Input Tags</label>
-   %    <div class="col-md-9 col-sm-9 col-xs-12">
-   %      <input id="tags_1" type="text" class="tags form-control" value="social, adverts, sales" data-tagsinput-init="true" style="display: none;">
-   %      <div id="tags_1_tagsinput" class="tagsinput" style="width: auto; min-height: 100px; height: 100px;">
-   %       <span class="tag">
-   %        <span>social&nbsp;&nbsp;</span>
-   %        <a href="#" title="Removing tag">x</a>
-   %       </span>
-   %       <span class="tag">
-   %        <span>adverts&nbsp;&nbsp;</span>
-   %        <a href="#" title="Removing tag">x</a>
-   %       </span>
-   %       <span class="tag">
-   %        <span>sales&nbsp;&nbsp;</span>
-   %        <a href="#" title="Removing tag">x</a>
-   %       </span>
-   %       <div id="tags_1_addTag">
-   %        <input id="tags_1_tag" value="" data-default="add a tag" style="color: rgb(102, 102, 102); width: 72px;"></div>
-   %        <div class="tags_clear"></div>
-   %       </div>
-   %       <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
-   %    </div>
-   %  </div>
-
-
-
-% articleEditorForm() ->
-%   #form{class=["form-horizontal form-label-left"], body=[
-%     field(text),
-%     field(password),
-%     field(country),
-%     field(select2_single),
-%     field(select2_group),        
-%     field(tags)      
-%   ]}.
 
 %------------------------------------------------------------------------------
 % wsKeytable
@@ -320,11 +242,13 @@ my_avatar(Vars,Opts,Avatar) ->
 %------------------------------------------------------------------------------
 % TOPNAV
 %------------------------------------------------------------------------------
-my_top_nav(Vars, Opts) -> my_top_nav(Vars, Opts,proplists:get_value(identity,Vars)).
-my_top_nav(V,O,#{user := #{avatar := Avatar, username:=Username}}) ->
-  my_top_nav(V,O,Avatar,Username);
-my_top_nav(V,O,_) -> my_top_nav(V,O,undefined,"john doe").
-my_top_nav(V,O,Avatar,Username) ->  
+my_top_nav(Vars, Opts) -> my_top_nav(proplists:get_value(identity,Vars)).
+my_top_nav(#{user := #{avatar := Avatar, username:=Username}}) ->
+  io:format("Avatar ~p, Username ~p~n",[Avatar,Username]),
+  my_top_nav({Avatar,Username});
+% my_top_nav(V,O,_) -> my_top_nav(V,O,undefined,"john doe").
+
+my_top_nav({Avatar,Username}) ->  
  wf:render(
   #panel{class=[top_nav], body=[
     #panel{class=[nav_menu], body=[
@@ -378,7 +302,7 @@ help()->
   ]}.
 
 settings() ->
-  Complition = badge([]),
+  Complition = badge(50),
   #li{body=[
     #link{href="/admin/settings",body=[
       Complition,
@@ -387,9 +311,6 @@ settings() ->
   ]}.
 
 badge(C) -> #span{class=["badge bg-red pull-right"],body=[wf:to_list(C),"%"]}.
-
-
-
 
 notifications() ->
   #li{class=[dropdown],data_fields=[{role,presentation}],body=[

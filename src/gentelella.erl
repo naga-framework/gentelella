@@ -2,7 +2,7 @@
 -behaviour(supervisor).
 -behaviour(application).
 -export([init/1, start/2, stop/1]).
--export([vendors/2,vendors/3,pnotify/3,dummy/0]).
+-export([vendors/2,vendors/3,pnotify/3,dummy/0,css/2,js/2]).
 -include_lib("nitro/include/nitro.hrl").
 
 -define(CSS,[bootstrap3,fontawesome,nprogress,icheck,progressbar,
@@ -32,10 +32,58 @@ vendors(T,L,B) when is_list(L),is_list(B)->
 
 dummy() ->
    [
-    {page,[{css,vendors(css,?CSS)},
-           {js,vendors(js,?JS)}
-          ]}
+    {css,vendors(css,?CSS)},
+    {js,vendors(js,?JS)}
    ].
+   
+css(C,A) ->
+  case {C,A} of 
+    {adm_auth,login} ->  [{gentelella,[jquery,bootstrap3,fontawesome,nprogress,animate,pnotify,gentelella]}];
+    {adm_dashboard,index} -> [{gentelella, [bootstrap3,fontawesome,
+                                            nprogress,icheck,progressbar,
+                                            jqvmap,moment,daterangepicker,
+                                            pnotify,gentelella]}];
+    {adm_articles,article}-> [{gentelella, [bootstrap3,fontawesome,
+                                            nprogress,icheck,datatables,
+                                            pnotify,gentelella]},
+                              {simplemde}];
+    {adm_articles,index}-> [{gentelella, [bootstrap3,fontawesome,
+                                          nprogress,icheck,datatables,
+                                          pnotify,gentelella]}];
+    {adm_users,index}   -> [{gentelella,[bootstrap3,fontawesome,
+                                         nprogress,icheck,datatables,
+                                         pnotify,gentelella]}];
+    {adm_users,profile} -> [{gentelella,[bootstrap3,fontawesome,
+                                         nprogress,icheck,prettify,select2,switchery,starrr,
+                                         pnotify,gentelella]}];
+    {adm_error,'404'} ->[{gentelella,[bootstrap3,fontawesome,nprogress,gentelella]}]
+  end.
+
+js(C,A) -> 
+  case {C,A} of
+    {adm_auth,login} ->  [{gentelella,[jquery,bootstrap3,fontawesome,nprogress,animate,pnotify,gentelella]}];
+    {adm_dashboard,index} -> [{gentelella,[jquery,bootstrap3,fastclick,
+                                           nprogress,chartjs,gauge,
+                                           progressbar,icheck,skycons,flot,
+                                           flot_orderbars,flot_spline,flot_curvedlines,
+                                           datejs,jqvmap,moment,
+                                           daterangepicker,pnotify,gentelella]}];
+    {adm_articles,article}-> [{gentelella, [jquery,bootstrap3,fastclick,nprogress,icheck,
+                                            datatables,jszip,pdfmake,pnotify,starrr,gentelella]},
+                              {simplemde}];
+    {adm_articles,index}-> [{gentelella, [jquery,bootstrap3,fastclick,nprogress,icheck,
+                                          datatables,jszip,pdfmake,pnotify,starrr,
+                                          gentelella]}];    
+    {adm_users,index}   -> [{gentelella,[jquery,bootstrap3,fastclick,
+                                         nprogress,icheck,datatables,
+                                         jszip,pdfmake,pnotify,starrr,gentelella]}];
+    {adm_users,profile} -> [{gentelella,[jquery,bootstrap3,fastclick,progressbar,
+                                         nprogress,raphael,morris,icheck,moment,
+                                         daterangepicker,wysiwyg,hotkeys,prettify,
+                                         tagsinput,switchery,select2,parsley,autosize,
+                                         autocomplete,pnotify,starrr,gentelella]}];
+    {adm_error,'404'} ->[{gentelella,[jquery,bootstrap3,fastclick,nprogress,gentelella]}]
+  end.
 
 vendor(pnotify,css)        -> ["/vendors/pnotify/dist/pnotify.css",
                                "/vendors/pnotify/dist/pnotify.buttons.css",
